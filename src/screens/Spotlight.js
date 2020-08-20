@@ -1,5 +1,6 @@
-import React from "react";
-import { StyleSheet, Text, View,ImageBackground } from "react-native";
+import React , { useCallback, useEffect,useState } from "react";
+import {connect} from 'react-redux';
+import { StyleSheet, Text, View,ImageBackground,ScrollView} from "react-native";
 import {
   Container,
   Body,
@@ -9,12 +10,42 @@ import {
   Button,
   Icon,
 } from "native-base";
-function AboutUs(props) {
+import { setnewsData, watchnewsData } from './../../redux/app-redux';
+    
+    const mapStateToProps=(state)=>{
+      return{
+        newsData:state.newsData,
+        
+
+      };
+    }
+    const mapDispatchToProps=(dispatch)=>{
+      return{ watchnewsData:()=>{dispatch(watchnewsData())}};
+    }
+    class Spotlight extends React.Component{
+      
+      constructor(props){
+        super(props);
+        this.state={
+          newsData:this.props.newsData,
+        }
+        this.props.watchnewsData();
+        console.log(this.props.newsData.one);
+        
+        
+      }
+      
+      
+      
+    render(){
+      console.ignoredYellowBox = ['Setting a timer'];
+
   return (
+    
     <Container>
       <Header style={{backgroundColor:"#27a5ef"}}>
         <Left>
-          <Button transparent onPress={() => props.navigation.openDrawer()}>
+          <Button transparent onPress={() => this.props.navigation.openDrawer()}>
             <Icon name="menu"></Icon>
           </Button>
         </Left>
@@ -23,13 +54,27 @@ function AboutUs(props) {
         </Body>
       </Header>
       <ImageBackground source={require("./bg.jpg")} style={styles.image}>
-      <Body style={{ alignSelf: "center", paddingTop: "40%" }}>
-        <Text>Spotlight Details</Text>
+      <Body style={{ alignSelf: "center", paddingTop: "10%"}}>
+      
+        <ScrollView>
+        <Text style={{fontSize:20,fontWeight:"bold",color:"white",marginVertical:20}}>{this.props.newsData.one}</Text>
+        <Text style={{fontSize:20,fontWeight:"bold",color:"white",marginVertical:20}}>{this.props.newsData.two}</Text>
+        <Text style={{fontSize:20,fontWeight:"bold",color:"white",marginVertical:20}}>{this.props.newsData.three}</Text>
+        <Text style={{fontSize:20,fontWeight:"bold",color:"white",marginVertical:20}}>{this.props.newsData.four}</Text>
+        <Text style={{fontSize:20,fontWeight:"bold",color:"white",marginVertical:20}}>{this.props.newsData.five}</Text>
+        <Text style={{fontSize:20,fontWeight:"bold",color:"white",marginVertical:20}}>{this.props.newsData.six}</Text>
+        <Text style={{fontSize:20,fontWeight:"bold",color:"white",marginVertical:20}}>{this.props.newsData.seven}</Text>
+        <Text style={{fontSize:20,fontWeight:"bold",color:"white",marginVertical:20}}>{this.props.newsData.eight}</Text>
+        <Text style={{fontSize:20,fontWeight:"bold",color:"white",marginVertical:20}}>{this.props.newsData.nine}</Text>
+        <Text style={{fontSize:20,fontWeight:"bold",color:"white",marginVertical:20}}>{this.props.newsData.ten}</Text>
+        </ScrollView>
       </Body>
       </ImageBackground>
     </Container>
-  );
-};
+  
+  )}};
+  
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -42,4 +87,4 @@ const styles = StyleSheet.create({
   },
 
 });
-export default AboutUs;
+export default connect(mapStateToProps,mapDispatchToProps)(Spotlight);
